@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.mocktrack.api.business.service.UserService;
-import com.mocktrack.api.web.model.LoginModel;
 import com.mocktrack.api.web.model.ResponseModel;
 import com.mocktrack.api.web.model.UserModel;
 import jakarta.validation.Valid;
-import static com.mocktrack.api.business.constant.GenericConstanst.LOGIN;
+
 @RestController
 @RequestMapping(AUTH)
 public class AuthController extends BaseController
@@ -29,17 +28,8 @@ public class AuthController extends BaseController
 		ResponseModel responseModel = ResponseModel.getInstance();
 		responseModel.setMessage("Success");
 		responseModel.setData(userService.registerUser(userModel));
-		responseModel.setStatusCode(HttpStatus.CREATED.value());
-		
-		return new ResponseEntity<>(responseModel, HttpStatus.CREATED);
-	}
-	
-	@PostMapping(LOGIN)
-	public ResponseEntity<ResponseModel> login(@RequestBody LoginModel loginModel) {
-		ResponseModel responseModel = ResponseModel.getInstance();
-		responseModel.setMessage("Success");
-		responseModel.setData(userService.login(loginModel));
 		responseModel.setStatusCode(HttpStatus.OK.value());
+		
 		return new ResponseEntity<>(responseModel, HttpStatus.OK);
 	}
 }

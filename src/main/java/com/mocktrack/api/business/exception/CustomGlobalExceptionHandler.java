@@ -60,7 +60,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public ErrorResponse handleCustomException(Exception ex)
 	{
-		return new ErrorResponse(new Date(), ex.getMessage(), ex.getMessage(), HttpStatus.FORBIDDEN.value(), null);
+		return new ErrorResponse(new Date(), ex.getMessage(), ex.getMessage(), HttpStatus.BAD_REQUEST.value(), null);
 	}
 
 	@Override
