@@ -3,12 +3,18 @@ package com.mocktrack.api.web.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.mocktrack.api.business.service.QuestionService;
 import com.mocktrack.api.persistance.entity.Category;
+import com.mocktrack.api.persistance.entity.Question;
 import com.mocktrack.api.persistance.entity.Quiz;
 import com.mocktrack.api.persistance.repository.CategoryRepository;
+import com.mocktrack.api.persistance.repository.QuestionRepository;
 import com.mocktrack.api.persistance.repository.QuizRepository;
+import com.mocktrack.api.web.model.QuestionModel;
 
 @RestController
 @RequestMapping("/api/v1/test")
@@ -31,20 +37,39 @@ public class TestController
 //	}
 	
 	
-	@Autowired
-	private CategoryRepository categoryRepository;
-	
-	@Autowired
-	private QuizRepository quizRepository;
-	
-	@GetMapping
-	public List<Quiz> getAllQuizes() {
-		return  quizRepository.findAll();
-	}	
+//	@Autowired
+//	private CategoryRepository categoryRepository;
+//	
+//	@Autowired
+//	private QuizRepository quizRepository;
+//	
+//	@Autowired
+//	private QuestionRepository questionRepository;
 	
 	//@GetMapping
-	public List<Category> getAllCategories(){
-		return categoryRepository.findAll();
+//	public List<Quiz> getAllQuizes() {
+//		return  quizRepository.findAll();
+//	}	
+//	
+	//@GetMapping
+//	public List<Category> getAllCategories(){
+//		return categoryRepository.findAll();
+//	}
+	
+//	@GetMapping
+//	public List<Question> test() {
+//		return questionRepository.checkQuestionAlreadyAddedToQuiz(1, 4); 
+//	}
+//	
+	
+	@Autowired
+	private QuestionService questionService;
+	
+	@PostMapping
+	public String test(@RequestBody QuestionModel questionModel) {
+		return questionService.addQuestion(questionModel);
 	}
+	
+	
 	
 }

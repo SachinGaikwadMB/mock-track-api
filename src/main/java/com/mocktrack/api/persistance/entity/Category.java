@@ -2,6 +2,7 @@ package com.mocktrack.api.persistance.entity;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,10 +29,13 @@ public class Category
 	@Column(name = "name")
 	private String name;
 	
+	@Column(name = "category_code", unique = true)
+	private String categoryCode;
+		
 	@Column(name = "description")
 	private String description;
 	
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	private List<Quiz> quizes;
 	
