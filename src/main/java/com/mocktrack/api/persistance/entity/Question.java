@@ -1,5 +1,6 @@
 package com.mocktrack.api.persistance.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -47,5 +48,6 @@ public class Question
 	
 	@ManyToOne
 	@JoinColumn(name = "quiz_id")
+	@JsonIgnore
 	private Quiz quiz;
 }

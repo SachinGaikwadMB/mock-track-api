@@ -5,10 +5,15 @@ public enum StatusCode
 	
 	INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
 	USER_ALREADY_EXIST(600, "User Already Exists!"),
+	
 	CATEGORY_ALREADY_EXIST(608, "Category Alredy Exists!"),
 	CATEGORY_NOT_FOUND(604, "Category Not Found!"),
+	
 	QUESTION_ALREADY_EXIST(610, "Question Alreay Exist!"),
-	QUESTION_NOT_FOUND(610, "Question Not Found!");
+	QUESTION_NOT_FOUND(612, "Question Not Found!"),
+	
+	QUIZ_ALREADY_EXIST(614, "Quiz already Exists!"),
+	QUIZ_NOT_FOUND(615, "Quiz Not Found!");
 	;
 	
 	private final int code;

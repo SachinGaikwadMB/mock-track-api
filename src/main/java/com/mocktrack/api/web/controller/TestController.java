@@ -7,14 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.mocktrack.api.business.service.QuestionService;
-import com.mocktrack.api.persistance.entity.Category;
-import com.mocktrack.api.persistance.entity.Question;
+import com.mocktrack.api.business.service.QuizService;
 import com.mocktrack.api.persistance.entity.Quiz;
-import com.mocktrack.api.persistance.repository.CategoryRepository;
-import com.mocktrack.api.persistance.repository.QuestionRepository;
 import com.mocktrack.api.persistance.repository.QuizRepository;
-import com.mocktrack.api.web.model.QuestionModel;
+import com.mocktrack.api.web.model.QuizModel;
 
 @RestController
 @RequestMapping("/api/v1/test")
@@ -62,14 +58,29 @@ public class TestController
 //	}
 //	
 	
+//	@Autowired
+//	private QuestionService questionService;
+//	
+//	@PostMapping
+//	public String test(@RequestBody QuestionModel questionModel) {
+//		return questionService.addQuestion(questionModel);
+//	}
+//	
+	
 	@Autowired
-	private QuestionService questionService;
+	QuizService quizService;
+	
+	@Autowired
+	QuizRepository quizRepository;
 	
 	@PostMapping
-	public String test(@RequestBody QuestionModel questionModel) {
-		return questionService.addQuestion(questionModel);
+	public String test(@RequestBody QuizModel quizModel) {
+		return quizService.addQuiz(quizModel);
 	}
 	
+	@GetMapping
+	public List<Quiz> getAll() {
+		return quizRepository.findAll();
 	
-	
+	}
 }

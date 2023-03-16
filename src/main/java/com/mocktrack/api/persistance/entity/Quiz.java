@@ -31,6 +31,9 @@ public class Quiz
 	@Column(name = "title")
 	private String title;
 	
+	@Column(name = "quiz_code", unique = true)
+	private String quizCode;
+	
 	@Column(name = "description")
 	private String description;
 	
@@ -51,7 +54,7 @@ public class Quiz
 	private Category category;
 	
 	@OneToMany(mappedBy = "quiz")
-	@JsonIgnore
+//	@JsonIgnore
 	private List<Question> questions;	
 
 }

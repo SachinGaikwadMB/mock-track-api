@@ -18,4 +18,7 @@ public interface QuestionRepository extends JpaRepository<Question, Integer>
 	Optional<Question> findByQuesId(Integer quesId);
 	
 	boolean existsByQuesId(Integer quesId);
+	
+	@Query(value ="SELECT q FROM Question AS q WHERE q.quiz.quizId =:quizId")
+	List<Question>  getAllQuestionByQuizId(@Param("quizId")Integer quizId);
 }
