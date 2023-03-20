@@ -8,10 +8,8 @@ import com.mocktrack.api.persistance.entity.Quiz;
 @Repository
 public interface QuizRepository extends JpaRepository<Quiz, Integer>
 {
-	
 	boolean existsByQuizCode(String quizCode);
 	
 	Optional<Quiz> findByQuizCode(String quizCode);
-	
 	
 }

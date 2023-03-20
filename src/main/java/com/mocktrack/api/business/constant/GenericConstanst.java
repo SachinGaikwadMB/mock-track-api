@@ -11,6 +11,7 @@ public class GenericConstanst
 	public static final String CATEGORY = "/{catId}";
 	public static final String QUESTIONS = BASE_URL + "/questions";
 	public static final String QUESTION = "/{quesId}";
+	public static final String QUIZES =  BASE_URL + "/quizes";
 	
 	
 	private GenericConstanst() {}

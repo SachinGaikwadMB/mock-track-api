@@ -1,6 +1,5 @@
 package com.mocktrack.api.web.model;
 
-import com.mocktrack.api.persistance.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

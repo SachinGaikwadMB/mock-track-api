@@ -18,23 +18,24 @@ public class QuizServiceImpl implements QuizService
 {
 	@Autowired
 	private QuizRepository quizRepository;
-	
-	@Autowired
-	private ModelMapper modelMapper;
-	
+
+//	@Autowired
+//	private ModelMapper modelMapper;
+
 	@Autowired
 	private QuestionRepository questionRepository;
-	
+
 	@Autowired
 	private CategoryRepository categoryRepository;
-	
+
 	@Override
 	public String addQuiz(QuizModel quizModel)
 	{
-		if(quizRepository.existsByQuizCode(quizModel.getQuizCode())) {
+		if (quizRepository.existsByQuizCode(quizModel.getQuizCode()))
+		{
 			throw new CustomException("Quiz Alreay Exist! You can update only.", StatusCode.QUIZ_ALREADY_EXIST);
-		}		
-		Quiz  quiz = new Quiz();
+		}
+		Quiz quiz = new Quiz();
 
 		quiz.setTitle(quizModel.getTitie());
 		quiz.setDescription(quizModel.getDescription());
@@ -46,9 +47,26 @@ public class QuizServiceImpl implements QuizService
 		quiz.setQuizCode(quizModel.getQuizCode());
 		List<Question> questions = questionRepository.getAllQuestionByQuizId(5);
 		quiz.setQuestions(questions);
-		
+
 		quizRepository.save(quiz);
 		return "success";
+	}
+
+	@Override
+	public List<Quiz> getAllQuizes()
+	{
+		List<Quiz> quizList = null;
+
+		try
+		{
+			quizList = quizRepository.findAll();
+		}
+		catch (Exception e)
+		{
+			throw new CustomException("Internal Server Error !", StatusCode.INTERNAL_SERVER_ERROR);
+		}
+
+		return quizList;
 	}
 
 }
