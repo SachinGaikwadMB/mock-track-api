@@ -1,5 +1,6 @@
 package com.mocktrack.api.web.controller;
 
+import static com.mocktrack.api.business.constant.GenericConstanst.QUIZES;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.mocktrack.api.business.service.QuizService;
 import com.mocktrack.api.web.model.ResponseModel;
-import static com.mocktrack.api.business.constant.GenericConstanst.QUIZES;
 
 @RestController
 @RequestMapping(QUIZES)
@@ -16,7 +16,7 @@ public class QuizController extends BaseController
 {
 	@Autowired
 	private QuizService quizService;
-
+	
 	@GetMapping
 	public ResponseEntity<ResponseModel> getAllQuizes()
 	{
@@ -25,6 +25,5 @@ public class QuizController extends BaseController
 		responseModel.setStatusCode(HttpStatus.OK.value());
 		responseModel.setData(quizService.getAllQuizes());
 		return new ResponseEntity<>(responseModel, HttpStatus.OK);
-
 	}
 }

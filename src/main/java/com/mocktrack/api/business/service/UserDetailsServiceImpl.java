@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
 		if (!user.isPresent())
 			throw new UsernameNotFoundException("Error :: Username not found !!!");
 		
-	
+
 		List<GrantedAuthority> authorities = 
 		user.get().getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getRoleName().name())).collect(Collectors.toList());
 				

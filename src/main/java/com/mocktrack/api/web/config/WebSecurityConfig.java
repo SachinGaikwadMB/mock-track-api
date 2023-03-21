@@ -13,6 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import com.mocktrack.api.jwt.AuthTokenFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -20,6 +23,9 @@ public class WebSecurityConfig
 {
 	@Autowired
 	private UserDetailsService userDetailsService;
+
+	@Autowired
+	private AuthTokenFilter authTokenFilter;
 
 	@Bean
 	public PasswordEncoder passwordEncoder()
@@ -38,25 +44,8 @@ public class WebSecurityConfig
 	{
 		return authenticationConfiguration.getAuthenticationManager();
 	}
-
+	
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
-	{
-		http
-				.csrf().disable()
-				.authorizeHttpRequests()
-				.requestMatchers("/api/v1/users")
-				.permitAll()
-				.anyRequest()
-				.permitAll()
-				.and()
-
-				.authenticationProvider(daoAuthenticationProvider());
-
-		return http.build();
-
-	}
-
 	public DaoAuthenticationProvider daoAuthenticationProvider()
 	{
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -64,4 +53,19 @@ public class WebSecurityConfig
 		provider.setPasswordEncoder(passwordEncoder());
 		return provider;
 	}
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
+	{
+		http.csrf().disable()
+				.authorizeHttpRequests()
+				.requestMatchers("/api/v1/auth/**").permitAll()
+				.requestMatchers("/api/v1/questions").hasRole("USER")
+				.anyRequest()
+				.permitAll();
+		http.authenticationProvider(daoAuthenticationProvider());
+		return http.build();
+
+	}
+
 }
