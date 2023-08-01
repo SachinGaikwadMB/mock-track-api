@@ -10,7 +10,6 @@ import com.mocktrack.api.persistance.repository.QuestionRepository;
 import com.mocktrack.api.persistance.repository.QuizRepository;
 
 
-//@Component
 public class TestRunner implements CommandLineRunner
 {
 
@@ -26,9 +25,6 @@ public class TestRunner implements CommandLineRunner
 	@Override
 	public void run(String... args) throws Exception
 	{
-//		Quiz quiz = new Quiz(1, "Title test", "Desc test", true, false, "50", "25",categoryRepository.findById(4).get() , null);
-//		
-//		quizRepository.save(quiz);
 		
 		List<Question> list  = questionRepository.checkQuestionAlreadyAddedToQuiz(1, 4);
 		System.out.println(list.get(0));
