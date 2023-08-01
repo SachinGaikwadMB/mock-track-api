@@ -1,5 +1,6 @@
 package com.mocktrack.api.web.config;
 
+import org.aspectj.weaver.ast.And;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -7,18 +8,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import com.mocktrack.api.jwt.AuthEntryPoint;
 import com.mocktrack.api.jwt.AuthTokenFilter;
 
 @Configuration
-@EnableWebSecurity
+@EnableMethodSecurity
 public class WebSecurityConfig
 {
 	@Autowired
@@ -26,6 +28,9 @@ public class WebSecurityConfig
 
 	@Autowired
 	private AuthTokenFilter authTokenFilter;
+	
+	@Autowired
+	private AuthEntryPoint authEntryPoint;
 
 	@Bean
 	public PasswordEncoder passwordEncoder()
@@ -57,15 +62,25 @@ public class WebSecurityConfig
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
 	{
-		http.csrf().disable()
+		http.csrf().and()
+		.cors().
+		disable()
+		
 				.authorizeHttpRequests()
-				.requestMatchers("/api/v1/auth/**").permitAll()
-				.requestMatchers("/api/v1/questions").hasRole("USER")
+				.requestMatchers("/api/v1/**").permitAll()
 				.anyRequest()
-				.permitAll();
-		http.authenticationProvider(daoAuthenticationProvider());
-		return http.build();
-
+				//.authenticated()
+				.permitAll()
+				.and()
+				.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+				.exceptionHandling()
+				.authenticationEntryPoint(authEntryPoint)
+				.and()
+				.authenticationProvider(daoAuthenticationProvider())
+				.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);	
+				return http.build();
 	}
 
 }

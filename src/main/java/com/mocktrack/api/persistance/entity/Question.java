@@ -43,8 +43,17 @@ public class Question
 	@Column(name = "option4")
 	private String option4;
 	
+	@Column(name = "option5")
+	private String option5;
+	
 	@Column(name = "correct_answer")
 	private String correctAnswer;
+	
+	@Column(name = "difficulty_tag")
+	private String difficultyTag;
+	
+	@Column(name = "chapter_tag")
+	private String chapterTag;
 	
 	@ManyToOne
 	@JoinColumn(name = "quiz_id")

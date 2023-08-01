@@ -8,5 +8,7 @@ public interface UserService
 {
 	String registerUser(UserModel userModel);
 	
+	String registerAdmin(UserModel userModel);
+	
 	Map<String, Object>  login(LoginModel loginModel);
 }

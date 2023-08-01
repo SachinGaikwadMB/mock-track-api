@@ -99,4 +99,28 @@ public class UserServiceImpl implements UserService
 		return data;
 	}
 
+	@Override
+	public String registerAdmin(UserModel userModel)
+	{
+		LOGGER.info("************ Inside the Register Admin *****************************");
+		if (userRepository.existsByEmail(userModel.getEmail()))
+		{
+			throw new CustomException("User Already Exists !", StatusCode.USER_ALREADY_EXIST);
+		}
+		try
+		{
+			User user = modelMapper.map(userModel, User.class);
+			user.setPassword(passwordEncoder.encode(userModel.getPassword()));
+			user.setConfirmPassword(passwordEncoder.encode(userModel.getConfirmPassword()));
+			user.setRoles(Arrays.asList(roleRepository.findByRoleName(ERole.ROLE_ADMIN)));
+			userRepository.save(user);
+		}
+		catch (Exception ex)
+		{
+			throw new CustomException("Internal Server Error !", StatusCode.INTERNAL_SERVER_ERROR);
+		}
+
+		return MessageConstant.SUCCESS;
+	}
+
 }

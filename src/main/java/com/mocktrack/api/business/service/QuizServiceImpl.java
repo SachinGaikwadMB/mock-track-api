@@ -19,8 +19,6 @@ public class QuizServiceImpl implements QuizService
 	@Autowired
 	private QuizRepository quizRepository;
 
-//	@Autowired
-//	private ModelMapper modelMapper;
 
 	@Autowired
 	private QuestionRepository questionRepository;

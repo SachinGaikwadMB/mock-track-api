@@ -35,7 +35,10 @@ public class QuestionController extends BaseController
 		return new ResponseEntity<>(responseModel, HttpStatus.OK);
 	}
 	
+	
+	//TODO :: This controller only accessible to the Admin not for user UPDATE SO
 	@GetMapping
+	@PreAuthorize("hasRole('ROLE_USER')")	
 	public ResponseEntity<ResponseModel> getAllQuestions() {
 		ResponseModel responseModel = ResponseModel.getInstance();
 		responseModel.setData(questionService.getAllQuestions());
