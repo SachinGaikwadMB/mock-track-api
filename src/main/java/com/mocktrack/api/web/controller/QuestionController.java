@@ -36,7 +36,6 @@ public class QuestionController extends BaseController
 	}
 	
 	
-	//TODO :: This controller only accessible to the Admin not for user UPDATE SO
 	@GetMapping
 	@PreAuthorize("hasRole('ROLE_USER')")	
 	public ResponseEntity<ResponseModel> getAllQuestions() {
